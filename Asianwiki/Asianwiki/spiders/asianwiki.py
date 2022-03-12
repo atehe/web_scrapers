@@ -1,8 +1,7 @@
-from curses.ascii import HT
 import scrapy, bs4, requests, time
 from requests_html import HTMLSession
 
-url = "https://asianwiki.com/Category:SBS_Drama_Series"
+url = "https://www.sabishare.com/file/sFuWPdYNi64-the-last-kingdom-s03e01-netnaija-com-mp4"
 
 try:
     session = HTMLSession()
@@ -10,8 +9,7 @@ try:
 except requests.exceptions.RequestException as error:
     print(error)
 
-response.html.render()
+response.html.render(timeout=100)
 
-time.sleep(10)
-soup = bs4.BeautifulSoup(response.text, "html.parser")
-print(soup)
+
+print(response.html.find("a", {"class": "download-url"}))
