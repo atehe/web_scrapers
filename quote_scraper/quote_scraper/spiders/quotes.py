@@ -14,3 +14,9 @@ class QuotesSpider(scrapy.Spider):
             tags = quote.xpath(".//div/a[@class='tag']/text()").getall()
 
             yield {"text": text, "author": author, "tags": tags}
+
+        next_page = response.xpath("//li[@class='next']/a/@href").get()
+        page_num = int(next_page[-2])
+
+        if next_page and page_num <= 5:
+            yield response.follow(url=next_page, callback=self.parse)
