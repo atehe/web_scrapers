@@ -26,10 +26,101 @@ class AnimesSpider(scrapy.Spider):
             url = anime.xpath("./a/@href").get()
 
             yield response.follow(
-                url=url, callback=self.parse_anime, meta={"name": name}
+                url=url,
+                callback=self.parse_anime,
+                meta={"name": name},
+                headers={"User-Agent": self.user_agent},
             )
 
     def parse_anime(self, response):
 
         name = response.request.meta["name"]
-        print(name)
+
+        yield {
+            "Name": name,
+            "Type": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[1]/a/text()"
+            ).get(),
+            "Episodes": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[2]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Status": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[3]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Aired": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[4]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Premiered": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[5]/a/text()"
+            ).get(),
+            "Broadcast": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[6]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Producers": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[7]/a/text()"
+            ).getall(),
+            "Licensors": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[8]/a/text()"
+            ).get(),
+            "Studios": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[9]/a/text()"
+            ).get(),
+            "Source": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[10]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Genres": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[11]/a/text()"
+            ).getall(),
+            "Themes": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[12]/a/text()"
+            ).getall(),
+            "Demographic": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[13]/a/text()"
+            ).get(),
+            "Duration": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[14]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Rating": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[15]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Score": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[16]/span[2]/text()"
+            ).get(),
+            "Scored By": response.xpath(
+                "//h2[text()='Information']/following-sibling::div[16]/span[3]/text()"
+            ).get(),
+            "Ranked": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[17]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Popularity": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[18]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Members": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[19]/text()"
+                ).getall()
+            ).strip("\n "),
+            "Favorites": "".join(
+                response.xpath(
+                    "//h2[text()='Information']/following-sibling::div[20]/text()"
+                ).getall()
+            ).strip("\n "),
+        }
