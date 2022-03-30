@@ -1,6 +1,20 @@
 import scrapy
 import cfscrape
 from scrapy.utils.response import open_in_browser
+import re
+
+
+def clean_score_data(score_data):
+    score_pattern = r"\d\.\d\d"
+    score_match = re.search(score_pattern, score_data)
+
+    if score_match:
+        score = score_match.group()
+        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},\d{3}"
+        scored_by_match = re.search(scored_by_pattern, score_data)
+        scored_by = scored_by_match.group()
+
+        return f"{score} scored by {scored_by} users"
 
 
 def clean_xpath_data(data):
@@ -10,10 +24,13 @@ def clean_xpath_data(data):
     info_header = [elem[:-1] for elem in valid_data if elem[-1] == ":"]
     if len(info_header) == 1:
         info_name = info_header[0]
-        if info_name == "Theme":
-            info_name = "Themes"
         info_data_list = set(valid_data[1:])
         info_data = ", ".join(info_data_list)
+
+        if info_name == "Theme":
+            info_name = "Themes"
+        elif info_name == "Score":
+            info_data = clean_score_data(info_data)
         return info_name, info_data
 
 
@@ -46,12 +63,12 @@ class AnimesSpider(scrapy.Spider):
                 headers={"User-Agent": self.user_agent},
             )
         next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
-        if next_page:
-            response.follow(
-                url=next_page,
-                callback=self.parse,
-                headers={"User-Agent": self.user_agent},
-            )
+        # if next_page:
+        #     response.follow(
+        #         url=next_page,
+        #         callback=self.parse,
+        #         headers={"User-Agent": self.user_agent},
+        #     )
 
     def parse_anime(self, response):
         name = response.request.meta["name"]
