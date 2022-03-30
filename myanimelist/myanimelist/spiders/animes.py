@@ -17,6 +17,13 @@ def clean_score_data(score_data):
         return f"{score} scored by {scored_by} users"
 
 
+def clean_ranked_data(ranked_data):
+    rank_pattern = r"#\d+"
+    match = re.search(rank_pattern, ranked_data)
+    if match:
+        return match.group()
+
+
 def clean_xpath_data(data):
     invalid_data = [",", "\n", ""]
     data = [elem.strip().strip("\n").strip(",") for elem in data]
@@ -31,6 +38,8 @@ def clean_xpath_data(data):
             info_name = "Themes"
         elif info_name == "Score":
             info_data = clean_score_data(info_data)
+        elif info_name == "Ranked":
+            info_data = clean_ranked_data(info_data)
         return info_name, info_data
 
 
