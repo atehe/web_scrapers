@@ -45,6 +45,13 @@ class AnimesSpider(scrapy.Spider):
                 meta={"name": name},
                 headers={"User-Agent": self.user_agent},
             )
+        next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
+        if next_page:
+            response.follow(
+                url=next_page,
+                callback=self.parse,
+                headers={"User-Agent": self.user_agent},
+            )
 
     def parse_anime(self, response):
         name = response.request.meta["name"]
