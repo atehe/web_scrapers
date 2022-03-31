@@ -10,9 +10,12 @@ def clean_score_data(score_data):
 
     if score_match:
         score = score_match.group()
-        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},\d{3}"
+        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},{0,1}\d{0,3}"
         scored_by_match = re.search(scored_by_pattern, score_data)
-        scored_by = scored_by_match.group()
+        if scored_by_match:
+            scored_by = scored_by_match.group()
+        else:
+            scored_by = scored_by_match
 
         return f"{score} scored by {scored_by} users"
 
@@ -72,12 +75,13 @@ class AnimesSpider(scrapy.Spider):
                 headers={"User-Agent": self.user_agent},
             )
         next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
-        # if next_page:
-        #     response.follow(
-        #         url=next_page,
-        #         callback=self.parse,
-        #         headers={"User-Agent": self.user_agent},
-        #     )
+
+        if next_page:
+            yield response.follow(
+                url=next_page,
+                callback=self.parse,
+                headers={"User-Agent": self.user_agent},
+            )
 
     def parse_anime(self, response):
         name = response.request.meta["name"]
