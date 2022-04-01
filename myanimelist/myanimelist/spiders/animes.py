@@ -1,6 +1,4 @@
 import scrapy
-import cfscrape
-from scrapy.utils.response import open_in_browser
 import re
 
 
@@ -10,7 +8,7 @@ def clean_score_data(score_data):
 
     if score_match:
         score = score_match.group()
-        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},{0,1}\d{0,3}"
+        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},{0,1}\d{3}"
         scored_by_match = re.search(scored_by_pattern, score_data)
         if scored_by_match:
             scored_by = scored_by_match.group()
@@ -74,8 +72,8 @@ class AnimesSpider(scrapy.Spider):
                 meta={"name": name},
                 headers={"User-Agent": self.user_agent},
             )
-        next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
 
+        next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
         if next_page:
             yield response.follow(
                 url=next_page,
