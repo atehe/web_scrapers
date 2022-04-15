@@ -18,39 +18,50 @@ cookies = driver.find_element(
 print(cookies.text)
 cookies.click()
 
-
+time.sleep(2)
 location_drop_down = driver.find_element(
     by=By.XPATH,
-    value='//*[@id="searchCollapsable"]/div[1]/div[2]/cmb-dropdown/div/div/button',
+    value="(//button[@class='btn btn-primary toggle-button'])[2]",
 )
-# WebDriverWait(driver, 20).until(
-#     EC.element_to_be_clickable(
-#         (
-#             By.XPATH,
-#             '//*[@id="searchCollapsable"]/div[1]/div[2]/cmb-dropdown/div/div/button',
-#         )
-#     )
-# ).click()
-time.sleep(5)
-action = ActionChains(driver)
-# location_drop_down.click()
 
+action = ActionChains(driver)
 action.move_to_element(to_element=location_drop_down)
 action.click()
 print("clicked")
 action.perform()
 print("performed, waiting...")
-# try:
-#     locations = WebDriverWait(driver, 10).until(
-#         EC.presence_of_element_located((By.XPATH, "//div[@class='item d-block']"))
-#     )
-#     print(locations)
-# finally:
-#     print(locations)
-time.sleep(20)
 
-locations = driver.find_element(by=By.XPATH, value="//div[@class='item d-block']")
-print(locations.text)
+time.sleep(5)
+
+location_id = 20
+while True:
+    location = driver.find_element(
+        by=By.XPATH, value=f"//div[@scrollid={str(location_id)}]"
+    )
+    location.click()
+    location_id += 1
+    practice_area_id = 3
+    while True:
+
+        practice_area_drop_down = driver.find_element(
+            by=By.XPATH, value="(//button[@class='btn btn-primary toggle-button'])[3]"
+        )
+        action = ActionChains(driver)
+        action.move_to_element(to_element=practice_area_drop_down)
+        action.click()
+        print("clicked")
+        action.perform()
+        print("performed, waiting...")
+
+        time.sleep(5)
+
+        practice_area = driver.find_element(
+            by=By.XPATH, value=f"//div[@scrollid={str(practice_area_id)}]"
+        )
+        practice_area.click()
+
+        time.sleep(100)
+
 
 print(locations)
 time.sleep(100)
