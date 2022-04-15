@@ -1,85 +1,87 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
-driver = webdriver.Chrome()
 
-driver.get("https://chambers.com/legal-guide/usa-5")
-time.sleep(10)
-cookies = driver.find_element(
-    by=By.XPATH, value='//*[@id="onetrust-accept-btn-handler"]'
-)
-print(cookies.text)
-cookies.click()
-
-time.sleep(2)
-location_drop_down = driver.find_element(
-    by=By.XPATH,
-    value="(//button[@class='btn btn-primary toggle-button'])[2]",
-)
-
-action = ActionChains(driver)
-action.move_to_element(to_element=location_drop_down)
-action.click()
-print("clicked")
-action.perform()
-print("performed, waiting...")
-
-time.sleep(5)
-
-location_id = 20
-while True:
-    location = driver.find_element(
-        by=By.XPATH, value=f"//div[@scrollid={str(location_id)}]"
+def drop_n_click(drop_down_id, value_id):
+    drop_down = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                f"(//button[@class='btn btn-primary toggle-button'])[{str(drop_down_id)}]",
+            )
+        )
     )
-    location.click()
-    location_id += 1
-    practice_area_id = 3
-    while True:
+    action = ActionChains(driver)
+    action.move_to_element(to_element=drop_down)
+    action.click()
+    action.perform()
 
-        practice_area_drop_down = driver.find_element(
-            by=By.XPATH, value="(//button[@class='btn btn-primary toggle-button'])[3]"
+    value = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, f"//div[@scrollid={str(value_id)}]"))
+    )
+    if drop_down_id == 1:
+        print(f"REGION: {value.text}")
+    elif drop_down_id == 2:
+        print(f"LOCATION: {value.text}")
+    if drop_down_id == 3:
+        print(f"PRACTICE: {value.text}")
+    value.click()
+
+
+driver = webdriver.Chrome()
+# driver.get("https://chambers.com/legal-guide/usa-5")
+driver.get("https://chambers.com/legal-rankings/construction-alaska-5:15:11887:1")
+
+# Accepts cookies if popped up
+try:
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
         )
-        time.sleep(3)
-        action = ActionChains(driver)
-        action.move_to_element(to_element=practice_area_drop_down)
-        action.click()
-        print("clicked")
-        action.perform()
-        print("performed, waiting...")
+    ).click()
+finally:
+    print("Cookies handled")
 
-        time.sleep(5)
 
-        practice_area = driver.find_element(
-            by=By.XPATH, value=f"//div[@scrollid={str(practice_area_id)}]"
-        )
-        practice_area.click()
+LOCATION_DROP_DOWN = 2
+PRACTICE_AREA_DROP_DOWN = 3
 
-        time.sleep(3)
-        search_button = driver.find_element(
-            by=By.XPATH, value='//*[@id="searchCollapsable"]/div[2]/div[2]/button'
+
+location_id = 0
+practice_area_id = 0
+while True:
+    try:
+        drop_n_click(LOCATION_DROP_DOWN, location_id)
+        driver.implicitly_wait(10)
+        drop_n_click(PRACTICE_AREA_DROP_DOWN, practice_area_id)
+
+        # seearch_xpath_value="(//button[@class='btn btn-chambers-light-blue w-100' and contains(text(),'Search')])[1]"
+        search_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[@class='btn btn-chambers-light-blue mt-1 w-100']")
+            )
         )
         search_button.click()
 
-        time.sleep(5)
-
-        # //*[@id="main"]/app-rankings/app-rankings-table/div/div[3]/div/app-rankings-tabs/div[1]/ul/lidriver.find_element(by=By.XPATH, value="(//button[@class='btn btn-chambers-light-blue w-100' and contains(text(),'Search')])[1]")
-        ranked_lawyers = driver.find_element(
-            by=By.XPATH,
-            value="//li[@class='nav-item']/span[contains(text(), 'Ranked Lawyers')]",
+        ranked_lawyers = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,
+                    "//li[@class='nav-item']/span[contains(text(), 'Ranked Lawyers')]",
+                )
+            )
         )
         ranked_lawyers.click()
-        time.sleep(3)
+        time.sleep(5)
 
-        time.sleep(100)
-
-
-print(locations)
-time.sleep(100)
+        # TO_DO: Extract data
+    except:
+        print("not found")
+    finally:
+        location_id += 1
+        practice_area_id += 1
 driver.quit()
