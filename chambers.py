@@ -46,6 +46,7 @@ while True:
         practice_area_drop_down = driver.find_element(
             by=By.XPATH, value="(//button[@class='btn btn-primary toggle-button'])[3]"
         )
+        time.sleep(3)
         action = ActionChains(driver)
         action.move_to_element(to_element=practice_area_drop_down)
         action.click()
@@ -59,6 +60,22 @@ while True:
             by=By.XPATH, value=f"//div[@scrollid={str(practice_area_id)}]"
         )
         practice_area.click()
+
+        time.sleep(3)
+        search_button = driver.find_element(
+            by=By.XPATH, value='//*[@id="searchCollapsable"]/div[2]/div[2]/button'
+        )
+        search_button.click()
+
+        time.sleep(5)
+
+        # //*[@id="main"]/app-rankings/app-rankings-table/div/div[3]/div/app-rankings-tabs/div[1]/ul/lidriver.find_element(by=By.XPATH, value="(//button[@class='btn btn-chambers-light-blue w-100' and contains(text(),'Search')])[1]")
+        ranked_lawyers = driver.find_element(
+            by=By.XPATH,
+            value="//li[@class='nav-item']/span[contains(text(), 'Ranked Lawyers')]",
+        )
+        ranked_lawyers.click()
+        time.sleep(3)
 
         time.sleep(100)
 
