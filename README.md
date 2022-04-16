@@ -3,8 +3,8 @@ Folders in this repo represent a webscraper that crawls a website to extract dat
 
 #### Completed
 - [Jumia](http://jumia.com.ng/) - flashsales
-- [Worldometer](https://www.worldometers.info/) - countries population
-- [Myanimelist](https://myanimelist.net/topanime.php) - top animes
+- [Worldometer](https://www.worldometers.info/) - countries population, countries covid data
+- [Myanimelist](https://myanimelist.net/topanime.php) - Animes
 
 #### Work in Progress
 - [Asianwiki](https://asianwiki.com/) - TvN Dramas, SBS Dramas
@@ -12,7 +12,6 @@ Folders in this repo represent a webscraper that crawls a website to extract dat
 ## Setup
 Generally, the projects are built mainly with Scrapy. Scrapy is best installed in a virtual environment to prevent conflicts with other packages, Conda, venv or pipenv can be used. Any extra description for setting up the environment for the scrapers will be provided in the projects README and a requirements.txt for installing dependencies.
 
-## Sites Scraped
 **Using Conda**
 
 Creating Environment 
@@ -29,6 +28,7 @@ Installing scrapy
 ```
 pip install scrapy
 ```
+
 
 ## Contributing
 You are welcome to join by opening a pull request describing what it is for. Issues with any scraper can also be posted and will be reviewed at my earliest convenience.
