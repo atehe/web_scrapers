@@ -1,10 +1,18 @@
 # Scraypas
-Each Project (folder) in this repo intends to crawl a website and extract data in a structured format from their pages. More details in their respective README
+Folders in this repo represent a webscraper that crawls a website to extract data in structured format from their pages. More details of the scrapers in their respective README.
+
+#### Completed
+- [Jumia](http://jumia.com.ng/) - flashsales
+- [Worldometer](https://www.worldometers.info/) - countries population
+- [Myanimelist](https://myanimelist.net/topanime.php) - top animes
+
+#### Work in Progress
+- [Asianwiki](https://asianwiki.com/) - TvN Dramas, SBS Dramas
 
 ## Setup
 Generally, the projects are built mainly with Scrapy. Scrapy is best installed in a virtual environment to prevent conflicts with other packages, Conda, venv or pipenv can be used. Any extra description for setting up the environment for the scrapers will be provided in the projects README and a requirements.txt for installing dependencies.
 
-
+## Sites Scraped
 **Using Conda**
 
 Creating Environment 
