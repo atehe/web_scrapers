@@ -1,3 +1,5 @@
+from shutil import which
+
 # Scrapy settings for booking project
 #
 # For simplicity, this file contains only settings considered important or
@@ -11,6 +13,14 @@ BOT_NAME = "booking"
 
 SPIDER_MODULES = ["booking.spiders"]
 NEWSPIDER_MODULE = "booking.spiders"
+
+
+# scrapy selenium settings
+from shutil import which
+
+SELENIUM_DRIVER_NAME = "chrome"
+SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
+SELENIUM_DRIVER_ARGUMENTS = ["--window-size=900,600"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -61,9 +71,7 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'booking.middlewares.BookingDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {"scrapy_selenium.SeleniumMiddleware": 800}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

@@ -1,12 +1,40 @@
 import scrapy
+from scrapy_selenium import SeleniumRequest
+from selenium.webdriver.common.by import By
+
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from scrapy.selector import Selector
+import time
 
 
-class UkHotelsSpider(scrapy.Spider):
-    name = "uk_hotels"
+class HotelsSpider(scrapy.Spider):
+    name = "hotels"
     allowed_domains = ["www.booking.com"]
     start_urls = [
-        "https://www.booking.com/searchresults.html?aid=304142&label=gen173rf-1FCAEoggI46AdIM1gDaKcBiAEBmAExuAEZyAEM2AEB6AEB-AECiAIBogIKdXB3b3JrLmNvbagCA7gCj_H0kgbAAgHSAiQ0Nzc2OGFjNy1hZDU1LTQ4Y2MtODk4MS0xZDZkYTcxNWVlMDHYAgXgAgE&sid=7cc1c3af8fec962eea2ba75b24a6c95c&sb=1&sb_lp=1&src=theme_landing_index&src_elem=sb&error_url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Findex.html%3Faid%3D304142%3Blabel%3Dgen173rf-1FCAEoggI46AdIM1gDaKcBiAEBmAExuAEZyAEM2AEB6AEB-AECiAIBogIKdXB3b3JrLmNvbagCA7gCj_H0kgbAAgHSAiQ0Nzc2OGFjNy1hZDU1LTQ4Y2MtODk4MS0xZDZkYTcxNWVlMDHYAgXgAgE%3Bsid%3D7cc1c3af8fec962eea2ba75b24a6c95c%3Bsrpvid%3D27694e00d88b0079%26%3B&ss=United+Kingdom&is_ski_area=&checkin_year=&checkin_month=&checkout_year=&checkout_month=&group_adults=2&group_children=0&no_rooms=1&b_h4u_keep_filters=&from_sf=1&ss_raw=un&ac_position=0&ac_langcode=en&ac_click_type=b&dest_id=222&dest_type=country&place_id_lat=54.4983&place_id_lon=-3.07394&search_pageview_id=f3844e06aad30343&search_selected=true&search_pageview_id=f3844e06aad30343&ac_suggestion_list_length=5&ac_suggestion_theme_list_length=0"
+        "https://www.booking.com/hotel/index.en-gb.html?aid=376363;label=bh-fm3txPOR2sVEAQeyBtYl_gS267777916216%3Apl%3Ata%3Ap1%3Ap22%2C563%2C000%3Aac%3Aap%3Aneg%3Afi%3Atikwd-1983705807%3Alp9076649%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YfqnDqqG8nt1XFzPnqOODws;sid=7cc1c3af8fec962eea2ba75b24a6c95c"
     ]
 
-    def parse(self, response):
-        pass
+    def start_requests(self):
+        for url in self.start_urls:
+            yield SeleniumRequest(url=url, callback=self.parse_properties_listing)
+
+    def parse_properties_listing(self, response):
+        driver = response.request.meta["driver"]
+
+        search_box = driver.find_element(by=By.XPATH, value="//input[@id='ss']")
+        search_box = driver.find_element_by_xpath("//input[@id='ss']")
+        search_box.send_keys("United Kindgom")
+        search_box.send_keys(Keys.RETURN)
+
+        time.sleep(10)
+
+        page_response = Selector(text=driver.page_source)
+        hotels_href = page_response.xpath('//div[@class="c90a25d457"]/a/@href').getall()
+        print(hotels_href)
+        # for url in hotels_href:
+        #     yield scrapy.Request(url=url, callback=self.parse_hotel_page)
+
+    # def parse_hotel_page(self, response):
+    #     print("avail")
