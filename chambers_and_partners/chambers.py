@@ -5,7 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import bs4
 import time
-
+import scrapy
+from scrapy.selector import Selector
 
 DRIVER = webdriver.Chrome()
 
@@ -28,7 +29,7 @@ def drop_n_click(drop_down_id, value_id):
     action.click()
     action.perform()
 
-    value = WebDriverWait(DRIVER, 10).until(
+    value = WebDriverWait(DRIVER, 15).until(
         EC.element_to_be_clickable((By.XPATH, f"//div[@scrollid='{value_id}']"))
     )
     if drop_down_id == 1:
@@ -88,6 +89,8 @@ def main():
         print("Accepted Cookies")
     except:
         print("No Cookies popup")
+    finally:
+        print("Cookies handled")
 
     DRIVER.implicitly_wait(10)  # wait for dropdown to be populated
 
@@ -95,23 +98,40 @@ def main():
         try:
             drop_n_click(LOCATION_DROP_DOWN, location_id)
             DRIVER.implicitly_wait(10)
+        except:
+            continue
 
-            practice_area_id = 0
-            while True:
+        practice_area_id = 0
+        while True:
+            try:
                 last_item = drop_n_click(PRACTICE_AREA_DROP_DOWN, practice_area_id)
                 click_search()
                 go_to_tab("Ranked Lawyers")
-
-                # TO_DO: Extract data
-                print("Scraping")
-
-                practice_area_id += 1
-                if last_item:
-                    break
+            except:
                 continue
 
-        except:
-            print(f"Error, Location: {location_id}")
+            page_response = Selector(DRIVER.page_source)
+            rankings = page_response.xpath("//app-rankings-tabs/div[1]/div/div/div")
+
+            for ranking in rankings:
+                rank = ranking.xpath("./h4/text()").get()
+                lawyers = ranking.xpath("./div[p]")
+
+                for lawyer in lawyers:
+                    lawyers_ = {
+                        "Name": lawyer.xpath("./p[1]/a/text()").get(),
+                        "Profile URL": "www.chambers.com"
+                        + lawyer.xpath("./p[1]/a/@href").get(),
+                        "Law Firm": lawyer.xpath("./p[2]/a/text()").get(),
+                        "Law Firm URL": "www.chambers.com"
+                        + lawyer.xpath("./p[2]/a/@href").get(),
+                        "Rank": rank,
+                    }
+            print(lawyers_)
+
+            practice_area_id += 1
+            if last_item:
+                break
             continue
 
     DRIVER.quit()

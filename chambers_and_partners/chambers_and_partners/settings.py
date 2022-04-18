@@ -1,3 +1,5 @@
+from shutil import which
+
 # Scrapy settings for chambers_and_partners project
 #
 # For simplicity, this file contains only settings considered important or
@@ -14,15 +16,15 @@ NEWSPIDER_MODULE = "chambers_and_partners.spiders"
 
 
 # scrapy selenium config
-from shutil import which
+
 
 SELENIUM_DRIVER_NAME = "chrome"
-SELENIUM_DRIVER_EXECUTABLE_PATH = which("chrome_driver")
+SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
 SELENIUM_DRIVER_ARGUMENTS = ["--window-size=1920,1080"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'chambers_and_partners (+http://www.yourdomain.com)'
+# USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -44,7 +46,7 @@ ROBOTSTXT_OBEY = False
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
-# Override the default request headers:
+# # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
@@ -70,9 +72,7 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'chambers_and_partners.middlewares.ChambersAndPartnersDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {"scrapy_selenium.SeleniumMiddleware": 800}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -88,7 +88,7 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-AUTOTHROTTLE_ENABLED = True
+# AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 # AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
