@@ -76,20 +76,18 @@ def go_to_tab(tab):
 def main():
 
     DRIVER.get("https://chambers.com/legal-guide/usa-5")
-    DRIVER.maximize_window()
 
     # Accepts cookies if popped up
     try:
-        WebDriverWait(DRIVER, 20).until(
-            EC.element_to_be_clickable(
+        WebDriverWait(DRIVER, 10).until(
+            EC.presence_of_element_located(
                 (By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
             )
         ).click()
-        print("Accepted Cookies")
-    except:
-        print("No Cookies popup")
+    finally:
+        print("Cookies handled")
 
-    DRIVER.implicitly_wait(10)  # wait for dropdown to be populated
+    DRIVER.implicitly_wait(20)  # wait for dropdown to be populated
 
     for location_id in range(LOCATIONS):
         try:
