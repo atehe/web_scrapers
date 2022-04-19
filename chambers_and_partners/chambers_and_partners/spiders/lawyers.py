@@ -12,7 +12,9 @@ import time
 class LawyersSpider(scrapy.Spider):
     name = "lawyers"
     allowed_domains = ["chambers.com"]
-    start_urls = ["https://chambers.com/legal-guide/usa-5"]
+    start_urls = [
+        "https://chambers.com/legal-guide/gc-influencers-77",
+    ]
 
     @staticmethod
     def drop_n_click(drop_down_id, value_id, driver):
@@ -32,8 +34,10 @@ class LawyersSpider(scrapy.Spider):
         value = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, f"//div[@scrollid='{value_id}']"))
         )
+
+        # logging
         if drop_down_id == 1:
-            logging.info(f"Getting Region {value.text}...")
+            logging.info(f"Getting Region/Guide {value.text}...")
         elif drop_down_id == 2:
             logging.info(f"Getting Location {value.text}...")
         elif drop_down_id == 3:
@@ -45,14 +49,14 @@ class LawyersSpider(scrapy.Spider):
                 by=By.XPATH,
                 value=f"//div[@scrollid='{value_id}']/following-sibling::div/div",
             )
-            ret_value = value.text
+            selected_value = value.text
             value.click()
-            return ret_value, False
+            return selected_value, False
 
         except:
-            ret_value = value.text
+            selected_value = value.text
             value.click()
-            return ret_value, True
+            return selected_value, True
 
     @staticmethod
     def click_search(driver):
@@ -85,25 +89,10 @@ class LawyersSpider(scrapy.Spider):
         except:
             logging.info(f"Only {tab} available")
 
-    def start_requests(self):
-        for url in self.start_urls:
-            yield SeleniumRequest(
-                url=url,
-                callback=self.parse,
-            )
-
-    def parse(self, response):
-
-        LOCATION_DROP_DOWN = 2  # location dropdown identifier
-        PRACTICE_AREA_DROP_DOWN = 3  # practice area dropdown identifier
-        LOCATIONS = 81  # number of locations in dropdown
-
-        driver = response.request.meta["driver"]
-        driver.maximize_window()
-
-        # Accepts cookies if popped up
+    @staticmethod
+    def handle_cookies(driver):
         try:
-            WebDriverWait(driver, 10).until(
+            WebDriverWait(driver, 15).until(
                 EC.presence_of_element_located(
                     (By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
                 )
@@ -111,20 +100,55 @@ class LawyersSpider(scrapy.Spider):
             logging.info("Cookies Accepted")
         except:
             logging.info("No Cookies popup detected")
+
+    def start_requests(self):
+
+        for url in self.start_urls:
+            yield SeleniumRequest(url=url, callback=self.parse)
+
+    def parse(self, response):
+
+        REGION_DROP_DOWN_ID = 1
+        LOCATION_DROP_DOWN_ID = 2
+        PRACTICE_AREA_DROP_DOWN_ID = 3
+
+        driver = response.request.meta["driver"]
+        driver.maximize_window()
+
+        self.handle_cookies(driver)
+        time.sleep(3)
+
+        regions_to_scrape = (1, 2)
+        for region_id in regions_to_scrape:
+            region = self.drop_n_click(REGION_DROP_DOWN_ID, region_id, driver)
             time.sleep(5)  # wait for drop down to be populated
 
-        for location_id in range(LOCATIONS):
-            try:
-                location = self.drop_n_click(LOCATION_DROP_DOWN, location_id, driver)
-                time.sleep(5)  # wait for drop down to be populated
+            location_id = 0
+            while True:
+                try:
+                    location = self.drop_n_click(
+                        LOCATION_DROP_DOWN_ID, location_id, driver
+                    )
+                    time.sleep(3)  # wait for drop down to be populated
+                except:
+                    logging.error(
+                        f"Could not scrape Location with scroll id: {location_id}"
+                    )
+                    continue
 
                 practice_area_id = 0
                 while True:
-                    practice_area = self.drop_n_click(
-                        PRACTICE_AREA_DROP_DOWN, practice_area_id, driver
-                    )
-                    self.click_search(driver)
-                    self.go_to_tab("Ranked Lawyers", driver)
+                    try:
+                        practice_area = self.drop_n_click(
+                            PRACTICE_AREA_DROP_DOWN_ID, practice_area_id, driver
+                        )
+                        self.click_search(driver)
+                        self.go_to_tab("Ranked Lawyers", driver)
+                    except:
+                        logging.error(
+                            f"Could not scrape Practice in {region}, {location} with scroll id: {location_id}"
+                        )
+                        continue
 
                     page_response = Selector(text=driver.page_source.encode("utf-8"))
                     rankings = page_response.xpath(
@@ -139,23 +163,22 @@ class LawyersSpider(scrapy.Spider):
                         for lawyer in lawyers:
                             yield {
                                 "Name": lawyer.xpath("./p[1]/a/text()").get(),
+                                "Region": region[0],
                                 "Location": location[0],
                                 "Practice Area": practice_area[0],
+                                "Law Firm": lawyer.xpath("./p[2]/a/i/text()").get(),
                                 "Profile URL": "www.chambers.com"
                                 + lawyer.xpath("./p[1]/a/@href").get(),
-                                "Law Firm": lawyer.xpath("./p[2]/a/i/text()").get(),
                                 "Law Firm URL": "www.chambers.com"
                                 + lawyer.xpath("./p[2]/a/@href").get(),
                                 "Rank": rank,
                             }
-
                     practice_area_id += 1
                     if practice_area[1]:
                         break
                     continue
 
-            except:
-                logging.error(
-                    f"Could not scrape location with scroll id: {location_id}"
-                )
+                location_id += 1
+                if location[1]:
+                    break
                 continue
