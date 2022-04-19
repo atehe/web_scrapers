@@ -20,7 +20,7 @@ NEWSPIDER_MODULE = "chambers_and_partners.spiders"
 
 SELENIUM_DRIVER_NAME = "chrome"
 SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
-SELENIUM_DRIVER_ARGUMENTS = ["--window-size=1920,1080"]
+SELENIUM_DRIVER_ARGUMENTS = ["--window-size=1280,720"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
