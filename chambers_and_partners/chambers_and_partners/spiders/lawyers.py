@@ -34,14 +34,15 @@ class LawyersSpider(scrapy.Spider):
         value = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, f"//div[@scrollid='{value_id}']"))
         )
+        selected_value = value.text
 
         # logging
         if drop_down_id == 1:
-            logging.info(f"Getting Region/Guide {value.text}...")
+            logging.info(f"Getting Region/Guide {selected_value}...")
         elif drop_down_id == 2:
-            logging.info(f"Getting Location {value.text}...")
+            logging.info(f"Getting Location {selected_value}...")
         elif drop_down_id == 3:
-            logging.info(f"Getting Practice {value.text}...")
+            logging.info(f"Getting Practice {selected_value}...")
 
         # check for last value in dropdown - next div after last value (anchor) doesn't have nested div
         try:
@@ -49,12 +50,10 @@ class LawyersSpider(scrapy.Spider):
                 by=By.XPATH,
                 value=f"//div[@scrollid='{value_id}']/following-sibling::div/div",
             )
-            selected_value = value.text
             value.click()
             return selected_value, False
 
         except:
-            selected_value = value.text
             value.click()
             return selected_value, True
 
@@ -102,18 +101,16 @@ class LawyersSpider(scrapy.Spider):
             logging.info("No Cookies popup detected")
 
     def start_requests(self):
-
         for url in self.start_urls:
             yield SeleniumRequest(url=url, callback=self.parse)
 
     def parse(self, response):
-
         REGION_DROP_DOWN_ID = 1
         LOCATION_DROP_DOWN_ID = 2
         PRACTICE_AREA_DROP_DOWN_ID = 3
 
         driver = response.request.meta["driver"]
-        driver.maximize_window()
+        driver.maximize_window()  # page format changes in small windows
 
         self.handle_cookies(driver)
         time.sleep(3)
@@ -121,7 +118,7 @@ class LawyersSpider(scrapy.Spider):
         regions_to_scrape = (1, 2)
         for region_id in regions_to_scrape:
             region = self.drop_n_click(REGION_DROP_DOWN_ID, region_id, driver)
-            time.sleep(5)  # wait for drop down to be populated
+            time.sleep(3)  # wait for drop down to be populated
 
             location_id = 0
             while True:
@@ -134,6 +131,7 @@ class LawyersSpider(scrapy.Spider):
                     logging.error(
                         f"Could not scrape Location with scroll id: {location_id}"
                     )
+                    location_id += 1
                     continue
 
                 practice_area_id = 0
@@ -148,6 +146,7 @@ class LawyersSpider(scrapy.Spider):
                         logging.error(
                             f"Could not scrape Practice in {region}, {location} with scroll id: {location_id}"
                         )
+                        practice_area_id += 1
                         continue
 
                     page_response = Selector(text=driver.page_source.encode("utf-8"))
