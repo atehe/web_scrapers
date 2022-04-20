@@ -1,126 +1,450 @@
 Name,Location,Address,Review Score,Scored By,Popular Facilities
 "
-The Duncombe Arms
+The Mendip Inn
 ",United Kindgom,"
-The Duncombe Arms Main, Ellastone, DE6 2GZ, United Kingdom
-",9.5, · 182 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nBar\n'>]"
+A37, Binegar, BA3 4UU, United Kingdom
+",8.8, · 336 reviews,"
+,
+Bar
+"
+"
+Three Tuns Ashwell
+",United Kindgom,"
+6 The High Street, Ashwell, SG7 5NL, United Kingdom
+",8.7, · 12 reviews,"
+,
+Tea/coffee maker in all rooms
+"
 "
 The Duncombe Arms
 ",United Kindgom,"
 The Duncombe Arms Main, Ellastone, DE6 2GZ, United Kingdom
-",9.5, · 182 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nBar\n'>]"
+",9.5, · 182 reviews,"
+,
+Bar
 "
-The Duncombe Arms
-",United Kindgom,"
-The Duncombe Arms Main, Ellastone, DE6 2GZ, United Kingdom
-",9.5, · 182 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nBar\n'>]"
 "
-The Duncombe Arms
+Luxury Yurt with Hot Tub
 ",United Kindgom,"
-The Duncombe Arms Main, Ellastone, DE6 2GZ, United Kingdom
-",9.5, · 182 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nBar\n'>]"
+Lôn Goed, Chwilog, LL53 6RZ, United Kingdom
+",8.8, · 20 reviews,
+"
+The Imperial Crown Hotel
+",United Kindgom,"
+42-46 Horton Street, Halifax, HX1 1QE, United Kingdom
+",7.4," · 1,591 reviews","
+,
+Free WiFi
+"
 "
 Harbour Guest House
 ",United Kindgom,"
 24 Leazes Street, Amble, NE65 0AA, United Kingdom
-",8.2, · 357 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+",8.2, · 357 reviews,"
+,
+Pets allowed
 "
-Harbour Guest House
-",United Kindgom,"
-24 Leazes Street, Amble, NE65 0AA, United Kingdom
-",8.2, · 357 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
 "
-Harbour Guest House
+Pear Tree Inn
 ",United Kindgom,"
-24 Leazes Street, Amble, NE65 0AA, United Kingdom
-",8.2, · 357 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+The Pear Tree Inn, High Street, Hildersham, CB21 6BU, United Kingdom
+",9.0, · 180 reviews,"
+,
+Pets allowed
+"
+"
+Scorrabrae
+",United Kindgom,"
+Scorrabrae, Orphir, KW17 2RF, United Kingdom
+",8.9, · 147 reviews,"
+,
+Tea/coffee maker in all rooms
+"
+"
+The Bluebell
+",United Kindgom,"
+10 Woodgate Helpston, Helpston, PE6 7ED, United Kingdom
+",9.1, · 409 reviews,"
+,
+Bar
+"
 "
 The Old Drum
 ",United Kindgom,"
 16 Chapel Street, Petersfield, GU32 3DP, United Kingdom
-",8.7, · 278 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree WiFi\n'>]"
+",8.7, · 278 reviews,"
+,
+Free WiFi
 "
-The Old Drum
-",United Kindgom,"
-16 Chapel Street, Petersfield, GU32 3DP, United Kingdom
-",8.7, · 278 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree WiFi\n'>]"
 "
-The Old Drum
+The Parsonage Hotel & Spa
 ",United Kindgom,"
-16 Chapel Street, Petersfield, GU32 3DP, United Kingdom
-",8.7, · 278 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree WiFi\n'>]"
+York Road, Escrick, Escrick, YO19 6LF, United Kingdom
+",8.2," · 1,796 reviews","
+,
+1 swimming pool
 "
-The Old Drum
+"
+The olde Coach House
 ",United Kindgom,"
-16 Chapel Street, Petersfield, GU32 3DP, United Kingdom
-",8.7, · 278 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree WiFi\n'>]"
+Main Street the olde coach house, Ashby Saint Ledgers, CV23 8UN, United Kingdom
+",7.8, · 238 reviews,"
+,
+Tea/coffee maker in all rooms
+"
 "
 The Attic at Edenmill
 ",United Kindgom,"
 The Attic, Edenmill Farm, Stockiemuir Road, Blanefield, G63 9AX, United Kingdom
-",8.9, · 230 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+",8.9, · 231 reviews,"
+,
+Pets allowed
 "
-The Attic at Edenmill
-",United Kindgom,"
-The Attic, Edenmill Farm, Stockiemuir Road, Blanefield, G63 9AX, United Kingdom
-",8.9, · 230 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
 "
-The Attic at Edenmill
+The Bell Inn, Rickinghall
 ",United Kindgom,"
-The Attic, Edenmill Farm, Stockiemuir Road, Blanefield, G63 9AX, United Kingdom
-",8.9, · 230 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+The Street, Rickinghall, IP22 1BN, United Kingdom
+",8.5, · 99 reviews,"
+,
+Tea/coffee maker in all rooms
+"
+"
+New Flying Horse Inn
+",United Kindgom,"
+Upper Bridge Street, Wye, Wye, Wye, TN25 5AN, United Kingdom
+",8.8, · 529 reviews,"
+,
+Pets allowed
+"
 "
 The Old Stone Trough
 ",United Kindgom,"
 Colne Road, Kelbrook, Barnoldswick, BB18 6XY, United Kingdom
-",8.3," · 2,368 reviews","[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+",8.3," · 2,370 reviews","
+,
+Pets allowed
 "
-The Old Stone Trough
-",United Kindgom,"
-Colne Road, Kelbrook, Barnoldswick, BB18 6XY, United Kingdom
-",8.3," · 2,368 reviews","[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
 "
-The Old Stone Trough
+The Lady Elizabeth Hotel
 ",United Kindgom,"
-Colne Road, Kelbrook, Barnoldswick, BB18 6XY, United Kingdom
-",8.3," · 2,368 reviews","[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+7 Market Hill, Sudbury, CO10 2EA, United Kingdom
+",8.2, · 533 reviews,"
+,
+Free parking
+"
+"
+Bodkin House Hotel
+",United Kindgom,"
+Petty France, Petty France, GL9 1AF, United Kingdom
+",8.6, · 460 reviews,"
+,
+Tea/coffee maker in all rooms
+"
+"
+The Percy Arms
+",United Kindgom,"
+75 Dorking Road, Guildford, GU4 8NP, United Kingdom
+",9.3, · 475 reviews,"
+,
+Free parking
+"
 "
 The Bull Inn Walsingham
 ",United Kindgom,"
 8 Common Place, Little Walsingham, NR22 6BP, United Kingdom
-",8.3, · 217 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+",8.3, · 218 reviews,"
+,
+Pets allowed
 "
-The Bull Inn Walsingham
-",United Kindgom,"
-8 Common Place, Little Walsingham, NR22 6BP, United Kingdom
-",8.3, · 217 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
 "
-The Bull Inn Walsingham
+Cocketts Hotel & Restaurant
 ",United Kindgom,"
-8 Common Place, Little Walsingham, NR22 6BP, United Kingdom
-",8.3, · 217 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+Market Place, Hawes, DL8 3RD, United Kingdom
+",8.5, · 365 reviews,"
+,
+Pets allowed
 "
-The Bull Inn Walsingham
+"
+The Ashbourne Hotel
 ",United Kindgom,"
-8 Common Place, Little Walsingham, NR22 6BP, United Kingdom
-",8.3, · 217 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nPets allowed\n'>]"
+Vicarage Lane, North Killingholme, DN40 3JL, United Kingdom
+",8.2, · 450 reviews,"
+,
+Tea/coffee maker in all rooms
+"
+"
+Grapes Hotel, Bar & Restaurant
+",United Kindgom,"
+Maentwrog, Blaenau-Ffestiniog, LL41 4HN, United Kingdom
+",8.3, · 715 reviews,"
+,
+Free parking
+"
 "
 The Bear Hotel
 ",United Kindgom,"
 High Street, Cowbridge, CF71 7AF, United Kingdom
-",8.3, · 360 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree parking\n'>]"
+",8.3, · 360 reviews,"
+,
+Free parking
 "
-The Bear Hotel
-",United Kindgom,"
-High Street, Cowbridge, CF71 7AF, United Kingdom
-",8.3, · 360 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree parking\n'>]"
-"
-The Bear Hotel
-",United Kindgom,"
-High Street, Cowbridge, CF71 7AF, United Kingdom
-",8.3, · 360 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nFree parking\n'>]"
 "
 Tottington Manor Hotel
 ",United Kindgom,"
 Edburton Road, Henfield, BN5 9LJ, United Kingdom
-",8.4, · 80 reviews,"[<Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\n'>, <Selector xpath=""(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"" data='\nTea/coffee maker in all rooms\n'>]"
+",8.4, · 80 reviews,"
+,
+Tea/coffee maker in all rooms
+"
+Name,Location,Address,Review Score,Scored By,Popular Facilities
+"
+The Mendip Inn
+",United Kindgom,"
+A37, Binegar, BA3 4UU, United Kingdom
+",8.8, · 337 reviews,"
+Bar
+"
+"
+Three Tuns Ashwell
+",United Kindgom,"
+6 The High Street, Ashwell, SG7 5NL, United Kingdom
+",8.7, · 12 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Duncombe Arms
+",United Kindgom,"
+The Duncombe Arms Main, Ellastone, DE6 2GZ, United Kingdom
+",9.5, · 182 reviews,"
+Bar
+"
+"
+Luxury Yurt with Hot Tub
+",United Kindgom,"
+Lôn Goed, Chwilog, LL53 6RZ, United Kingdom
+",8.8, · 20 reviews,
+"
+The Imperial Crown Hotel
+",United Kindgom,"
+42-46 Horton Street, Halifax, HX1 1QE, United Kingdom
+",7.4," · 1,591 reviews","
+Free WiFi
+,
+Family rooms
+"
+"
+Harbour Guest House
+",United Kindgom,"
+24 Leazes Street, Amble, NE65 0AA, United Kingdom
+",8.2, · 357 reviews,"
+Pets allowed
+,
+Free parking
+,
+Tea/coffee maker in all rooms
+"
+"
+Pear Tree Inn
+",United Kindgom,"
+The Pear Tree Inn, High Street, Hildersham, CB21 6BU, United Kingdom
+",9.0, · 180 reviews,"
+Pets allowed
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+Scorrabrae
+",United Kindgom,"
+Scorrabrae, Orphir, KW17 2RF, United Kingdom
+",8.9, · 147 reviews,"
+Tea/coffee maker in all rooms
+"
+"
+The Bluebell
+",United Kindgom,"
+10 Woodgate Helpston, Helpston, PE6 7ED, United Kingdom
+",9.1, · 409 reviews,"
+Bar
+"
+"
+The Old Drum
+",United Kindgom,"
+16 Chapel Street, Petersfield, GU32 3DP, United Kingdom
+",8.7, · 278 reviews,"
+Free WiFi
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Parsonage Hotel & Spa
+",United Kindgom,"
+York Road, Escrick, Escrick, YO19 6LF, United Kingdom
+",8.2," · 1,796 reviews","
+1 swimming pool
+,
+Free parking
+,
+Spa and wellness centre
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The olde Coach House
+",United Kindgom,"
+Main Street the olde coach house, Ashby Saint Ledgers, CV23 8UN, United Kingdom
+",7.8, · 238 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Attic at Edenmill
+",United Kindgom,"
+The Attic, Edenmill Farm, Stockiemuir Road, Blanefield, G63 9AX, United Kingdom
+",8.9, · 231 reviews,"
+Pets allowed
+"
+"
+The Bell Inn, Rickinghall
+",United Kindgom,"
+The Street, Rickinghall, IP22 1BN, United Kingdom
+",8.5, · 99 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+New Flying Horse Inn
+",United Kindgom,"
+Upper Bridge Street, Wye, Wye, Wye, TN25 5AN, United Kingdom
+",8.8, · 529 reviews,"
+Pets allowed
+,
+Free parking
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Old Stone Trough
+",United Kindgom,"
+Colne Road, Kelbrook, Barnoldswick, BB18 6XY, United Kingdom
+",8.3," · 2,371 reviews","
+Pets allowed
+,
+Free parking
+,
+Bar
+"
+"
+The Lady Elizabeth Hotel
+",United Kindgom,"
+7 Market Hill, Sudbury, CO10 2EA, United Kingdom
+",8.2, · 533 reviews,"
+Free parking
+,
+Free WiFi
+,
+Pets allowed
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+Bodkin House Hotel
+",United Kindgom,"
+Petty France, Petty France, GL9 1AF, United Kingdom
+",8.6, · 460 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Percy Arms
+",United Kindgom,"
+75 Dorking Road, Guildford, GU4 8NP, United Kingdom
+",9.3, · 475 reviews,"
+Free parking
+,
+Free WiFi
+,
+Restaurant
+,
+Non-smoking rooms
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Bull Inn Walsingham
+",United Kindgom,"
+8 Common Place, Little Walsingham, NR22 6BP, United Kingdom
+",8.3, · 218 reviews,"
+Pets allowed
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+Cocketts Hotel & Restaurant
+",United Kindgom,"
+Market Place, Hawes, DL8 3RD, United Kingdom
+",8.5, · 365 reviews,"
+Pets allowed
+,
+Free WiFi
+,
+Bar
+"
+"
+The Ashbourne Hotel
+",United Kindgom,"
+Vicarage Lane, North Killingholme, DN40 3JL, United Kingdom
+",8.2, · 450 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+Grapes Hotel, Bar & Restaurant
+",United Kindgom,"
+Maentwrog, Blaenau-Ffestiniog, LL41 4HN, United Kingdom
+",8.3, · 715 reviews,"
+Free parking
+,
+Free WiFi
+,
+Tea/coffee maker in all rooms
+,
+Bar
+"
+"
+The Bear Hotel
+",United Kindgom,"
+High Street, Cowbridge, CF71 7AF, United Kingdom
+",8.3, · 360 reviews,"
+Free parking
+,
+Bar
+"
+"
+Tottington Manor Hotel
+",United Kindgom,"
+Edburton Road, Henfield, BN5 9LJ, United Kingdom
+",8.4, · 80 reviews,"
+Tea/coffee maker in all rooms
+,
+Bar
+"

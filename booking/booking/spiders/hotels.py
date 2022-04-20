@@ -28,7 +28,7 @@ class HotelsSpider(scrapy.Spider):
         search_box.send_keys(location)
         search_box.send_keys(Keys.RETURN)
 
-        time.sleep(10)
+        time.sleep(5)
 
         page_response = Selector(text=driver.page_source)
         hotels_href = page_response.xpath('//div[@class="c90a25d457"]/a/@href').getall()
@@ -39,22 +39,18 @@ class HotelsSpider(scrapy.Spider):
             )
 
     def parse_hotel_page(self, response):
-        driver = response.request.meta["driver"]
-        driver_response = Selector(text=driver.page_source)
 
         yield {
-            "Name": driver_response.xpath("///h2[@id='hp_hotel_name']/text()[2]").get(),
+            "Name": response.xpath("///h2[@id='hp_hotel_name']/text()[2]").get(),
             "Location": response.request.meta.get("Location"),
-            "Address": driver_response.xpath(
-                "//p[@id='showMap2']/span[1]/text()"
-            ).get(),
-            "Review Score": driver_response.xpath(
+            "Address": response.xpath("//p[@id='showMap2']/span[1]/text()").get(),
+            "Review Score": response.xpath(
                 "//div[@data-testid='review-score-component']/div/text()"
             ).get(),
-            "Scored By": driver_response.xpath(
-                "//div[@data-testid='review-score-component']/div[2]/span[2]/text()"
+            "Scored By": response.xpath(
+                "//div[@data-testid='review-score-component']/div[2]/span[2]/text()[2]"
             ).get(),
-            "Popular Facilities": driver_response.xpath(
-                "(//h3[contains(text(), 'popular facilities')]/following-sibling::div)[1]/text()"
+            "Popular Facilities": response.xpath(
+                "(//div[@class='hp_desc_important_facilities clearfix hp_desc_important_facilities--bui '])[1]/div/text()[2]"
             ).getall(),
         }
