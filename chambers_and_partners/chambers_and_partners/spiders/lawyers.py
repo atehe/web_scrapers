@@ -33,6 +33,16 @@ class LawyersSpider(scrapy.Spider):
         action.click()
         action.perform()
 
+        values = driver.find_elements(
+            by=By.XPATH,
+            value="//div[@class='list-item-container']/cmb-infinite-scroll/div/div",
+        )
+
+        if len(values) < 2:
+            action.click()
+            action.perform()
+            return "no value"
+
         value = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, f"//div[@scrollid='{value_id}']"))
         )
@@ -46,16 +56,15 @@ class LawyersSpider(scrapy.Spider):
         elif drop_down_id == 3:
             logging.info(f"Getting Practice {selected_value}...")
 
-        # check for last value in dropdown - next div after last value (anchor) doesn't have nested div
-        try:
-            driver.find_element(
-                by=By.XPATH,
-                value=f"//div[@scrollid='{value_id}']/following-sibling::div/div",
-            )
+        last_value = driver.find_element(
+            by=By.XPATH, value="//div[@class='item d-block'][position()=last()]"
+        ).get_attribute("scrollid")
+
+        if value_id != int(last_value):
             value.click()
             return selected_value, False
 
-        except:
+        else:
             value.click()
             return selected_value, True
 
@@ -73,7 +82,7 @@ class LawyersSpider(scrapy.Spider):
         action.move_to_element(to_element=search)
         action.click()
         action.perform()
-        time.sleep(2)  # wait for page to load
+        time.sleep(3.5)  # wait for page to load
 
     @staticmethod
     def go_to_tab(tab, driver):
@@ -115,9 +124,9 @@ class LawyersSpider(scrapy.Spider):
         driver.maximize_window()  # page format changes in small windows
 
         self.handle_cookies(driver)
-        time.sleep(3)
+        time.sleep(2)
 
-        regions_to_scrape = (1, 2)
+        regions_to_scrape = (1,)
         for region_id in regions_to_scrape:
             region = self.drop_n_click(REGION_DROP_DOWN_ID, region_id, driver)
             time.sleep(2)  # wait for drop down to be populated
@@ -142,6 +151,8 @@ class LawyersSpider(scrapy.Spider):
                         practice_area = self.drop_n_click(
                             PRACTICE_AREA_DROP_DOWN_ID, practice_area_id, driver
                         )
+                        if practice_area == "no value":
+                            break
                         self.click_search(driver)
                         self.go_to_tab("Ranked Lawyers", driver)
                     except:
