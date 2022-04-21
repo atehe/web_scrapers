@@ -1,4 +1,6 @@
 import scrapy
+from itemloaders import ItemLoader
+from chambers_and_partners.items import ChambersAndPartnersItem
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -71,7 +73,7 @@ class LawyersSpider(scrapy.Spider):
         action.move_to_element(to_element=search)
         action.click()
         action.perform()
-        time.sleep(3)  # wait for page to load
+        time.sleep(2)  # wait for page to load
 
     @staticmethod
     def go_to_tab(tab, driver):
@@ -118,7 +120,7 @@ class LawyersSpider(scrapy.Spider):
         regions_to_scrape = (1, 2)
         for region_id in regions_to_scrape:
             region = self.drop_n_click(REGION_DROP_DOWN_ID, region_id, driver)
-            time.sleep(3)  # wait for drop down to be populated
+            time.sleep(2)  # wait for drop down to be populated
 
             location_id = 0
             while True:
@@ -126,7 +128,7 @@ class LawyersSpider(scrapy.Spider):
                     location = self.drop_n_click(
                         LOCATION_DROP_DOWN_ID, location_id, driver
                     )
-                    time.sleep(3)  # wait for drop down to be populated
+                    time.sleep(2)  # wait for drop down to be populated
                 except:
                     logging.error(
                         f"Could not scrape Location with scroll id: {location_id}"
@@ -160,18 +162,20 @@ class LawyersSpider(scrapy.Spider):
                         lawyers = ranking.xpath("./div[p]")
 
                         for lawyer in lawyers:
-                            yield {
-                                "Name": lawyer.xpath("./p[1]/a/text()").get(),
-                                "Region": region[0],
-                                "Location": location[0],
-                                "Practice Area": practice_area[0],
-                                "Law Firm": lawyer.xpath("./p[2]/a/i/text()").get(),
-                                "Profile URL": "www.chambers.com"
-                                + lawyer.xpath("./p[1]/a/@href").get(),
-                                "Law Firm URL": "www.chambers.com"
-                                + lawyer.xpath("./p[2]/a/@href").get(),
-                                "Rank": rank,
-                            }
+                            loader = ItemLoader(
+                                item=ChambersAndPartnersItem(), selector=lawyer
+                            )
+                            loader.add_xpath("name", "./p[1]/a/text()")
+                            loader.add_value("rank", rank)
+                            loader.add_xpath("law_firm", "./p[2]/a/i/text()")
+                            loader.add_value("practice_area", practice_area[0])
+                            loader.add_value("location", location[0])
+                            loader.add_value("region", region[0])
+                            loader.add_xpath("profile_url", "./p[1]/a/@href")
+                            loader.add_xpath("law_firm_url", "./p[2]/a/@href")
+
+                            yield loader.load_item()
+
                     practice_area_id += 1
                     if practice_area[1]:
                         break
