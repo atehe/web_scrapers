@@ -2,15 +2,13 @@ import scrapy
 from urllib.parse import urlencode
 
 
-search_queries = ["laptop", "camera"]
-
-
 class ProductsSpider(scrapy.Spider):
     name = "products"
     allowed_domains = ["amazon.com"]
+    search_queries = ["laptop", "camera"]
 
-    def start_request(self):
-        for query in search_queries:
+    def start_requests(self):
+        for query in self.search_queries:
             url = "https://www.amazon.com/s?" + urlencode({"k": query})
             yield scrapy.Request(
                 url=url,
@@ -32,7 +30,7 @@ class ProductsSpider(scrapy.Spider):
 
     def parse_product(self, response):
         yield {
-            "Name": response.xpath("//span[@id='productTitle']/@text()").get(),
+            "Name": response.xpath("//span[@id='productTitle']/text()").get(),
             "Rating": response.xpath(
                 "//div[@id='averageCustomerReviews']/span/span/span/a/i/span/text()[1]"
             ).get(),
@@ -43,10 +41,13 @@ class ProductsSpider(scrapy.Spider):
                 "//a[@id='askATFLink']/span/text()[1]"
             ).get(),
             "Listing Price": response.xpath(
-                "//div[@id='corePrice_desktop']/div/table/tbody/tr[1]/td[2]/span/span/text()"
+                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
             ).get(),
             "Current Price": response.xpath(
-                "//div[@id='corePrice_desktop']/div/table/tbody/tr[2]/td[2]/span/span/text()"
+                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[2]"
+            ).get()
+            or response.xpath(
+                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
             ).get(),
             "ASIN": response.xpath(
                 "//th[contains(text(), 'ASIN')]/following-sibling::td/text()"
