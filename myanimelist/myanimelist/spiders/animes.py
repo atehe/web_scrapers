@@ -27,9 +27,9 @@ class AnimesSpider(scrapy.Spider):
                 callback=self.parse_anime,
             )
 
-        # next_page = -blue-box next"]/@href').get()
-        # if next_page:
-        #     yield response.follow(url=next_page, callback=self.parse)
+        next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
+        if next_page:
+            yield response.follow(url=next_page, callback=self.parse)
 
     def parse_anime(self, response):
         loader = ItemLoader(item=MyanimelistItem(), selector=response)
