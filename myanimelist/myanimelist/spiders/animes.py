@@ -1,99 +1,130 @@
 import scrapy
-import re
-
-
-def clean_score_data(score_data):
-    score_pattern = r"\d\.\d\d"
-    score_match = re.search(score_pattern, score_data)
-
-    if score_match:
-        score = score_match.group()
-        scored_by_pattern = r"\d{0,3},{0,1}\d{0,3},{0,1}\d{3}"
-        scored_by_match = re.search(scored_by_pattern, score_data)
-        if scored_by_match:
-            scored_by = scored_by_match.group()
-        else:
-            scored_by = scored_by_match
-
-        return f"{score} scored by {scored_by} users"
-
-
-def clean_ranked_data(ranked_data):
-    rank_pattern = r"#\d+"
-    match = re.search(rank_pattern, ranked_data)
-    if match:
-        return match.group()
-
-
-def clean_xpath_data(data):
-    invalid_data = [",", "\n", ""]
-    data = [elem.strip().strip("\n").strip(",") for elem in data]
-    valid_data = [elem for elem in data if elem not in invalid_data]
-    info_header = [elem[:-1] for elem in valid_data if elem[-1] == ":"]
-    if len(info_header) == 1:
-        info_name = info_header[0]
-        info_data_list = set(valid_data[1:])
-        info_data = ", ".join(info_data_list)
-
-        if info_name == "Theme":
-            info_name = "Themes"
-        elif info_name == "Score":
-            info_data = clean_score_data(info_data)
-        elif info_name == "Ranked":
-            info_data = clean_ranked_data(info_data)
-        return info_name, info_data
+from itemloaders import ItemLoader
+from myanimelist.items import MyanimelistItem
 
 
 class AnimesSpider(scrapy.Spider):
     name = "animes"
     allowed_domains = ["myanimelist.net"]
     start_urls = ["https://myanimelist.net/topanime.php"]
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36"
 
     def start_requests(self):
         for url in self.start_urls:
 
             yield scrapy.Request(
                 url=url,
-                headers={"User-Agent": self.user_agent},
                 callback=self.parse,
             )
 
     def parse(self, response):
-        animes = response.xpath("//tr[@class='ranking-list']/td[2]/div/div[2]/h3")
+        animes_url = response.xpath(
+            "//h3[@class='hoverinfo_trigger fl-l fs14 fw-b anime_ranking_h3']/a/@href"
+        ).getall()
 
-        for anime in animes:
-            name = anime.xpath("./a/text()").get()
-            url = anime.xpath("./a/@href").get()
-
+        for url in animes_url:
             yield response.follow(
                 url=url,
                 callback=self.parse_anime,
-                meta={"name": name},
-                headers={"User-Agent": self.user_agent},
             )
 
-        next_page = response.xpath('//a[@class="link-blue-box next"]/@href').get()
-        if next_page:
-            yield response.follow(
-                url=next_page,
-                callback=self.parse,
-                headers={"User-Agent": self.user_agent},
-            )
+        # next_page = -blue-box next"]/@href').get()
+        # if next_page:
+        #     yield response.follow(url=next_page, callback=self.parse)
 
     def parse_anime(self, response):
-        name = response.request.meta["name"]
-        info_dict = {"Name": name}
+        loader = ItemLoader(item=MyanimelistItem(), selector=response)
 
-        info_xpaths = response.xpath(
-            "//h2[text()='Information']/following-sibling::div"
+        loader.add_xpath("Title", "//div[@itemprop='name']/h1/strong/text()")
+        loader.add_xpath(
+            "Alternative_Titles",
+            "//span[@class='dark_text' and contains(text(),'Synonyms')]/parent::div/text()",
         )
-
-        for info in info_xpaths:
-            data = info.xpath(".//text()").getall()
-            info_data = clean_xpath_data(data)
-            if not info_data:
-                continue
-            info_dict[info_data[0]] = info_data[1]
-
-        yield info_dict
+        loader.add_xpath(
+            "Type",
+            "//span[@class='dark_text' and contains(text(),'Type')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Episodes",
+            "///span[@class='dark_text' and contains(text(),'Episodes')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Status",
+            "//span[@class='dark_text' and contains(text(),'Status')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Aired",
+            "//span[@class='dark_text' and contains(text(),'Aired')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Premiered",
+            "//span[@class='dark_text' and contains(text(),'Premiered')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Broadcast",
+            "//span[@class='dark_text' and contains(text(),'Broadcast')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Producers",
+            "//span[@class='dark_text' and contains(text(),'Producers')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Licensors",
+            "//span[@class='dark_text' and contains(text(), 'Licensors')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Studio",
+            "//span[@class='dark_text' and contains(text(), 'Studio')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Genre",
+            "//span[@class='dark_text' and contains(text(), 'Genre')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Theme",
+            "//span[@class='dark_text' and contains(text(), 'Theme')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Demographic",
+            "//span[@class='dark_text' and contains(text(), 'Demographic')]/following-sibling::a/text()",
+        )
+        loader.add_xpath(
+            "Duration",
+            "//span[@class='dark_text' and contains(text(), 'Duration')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Rating",
+            "//span[@class='dark_text' and contains(text(), 'Rating')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Source",
+            "//span[@class='dark_text' and contains(text(), 'Source')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Score",
+            "//span[@class='dark_text' and contains(text(), 'Score')]/following-sibling::span[@itemprop='ratingValue']/text()",
+        )
+        loader.add_xpath(
+            "Score",
+            "//span[@class='dark_text' and contains(text(), 'Score')]/following-sibling::span[@itemprop='ratingValue']/text()",
+        )
+        loader.add_xpath(
+            "Scored_By",
+            "//span[@class='dark_text' and contains(text(), 'Score')]/following-sibling::span[@itemprop='ratingCount']/text()",
+        )
+        loader.add_xpath(
+            "Ranked",
+            "//span[@class='dark_text' and contains(text(), 'Ranked')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Popularity",
+            "//span[@class='dark_text' and contains(text(), 'Popularity')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Members",
+            "//span[@class='dark_text' and contains(text(), 'Members')]/parent::div/text()",
+        )
+        loader.add_xpath(
+            "Favorites",
+            "//span[@class='dark_text' and contains(text(), 'Favorites')]/parent::div/text()",
+        )
+        yield loader.load_item()
