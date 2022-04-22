@@ -82,7 +82,7 @@ class LawyersSpider(scrapy.Spider):
         action.move_to_element(to_element=search)
         action.click()
         action.perform()
-        time.sleep(3.5)  # wait for page to load
+        time.sleep(3)  # wait for page to load
 
     @staticmethod
     def go_to_tab(tab, driver):
@@ -126,7 +126,7 @@ class LawyersSpider(scrapy.Spider):
         self.handle_cookies(driver)
         time.sleep(2)
 
-        regions_to_scrape = (1,)
+        regions_to_scrape = (1, 2)
         for region_id in regions_to_scrape:
             region = self.drop_n_click(REGION_DROP_DOWN_ID, region_id, driver)
             time.sleep(2)  # wait for drop down to be populated
