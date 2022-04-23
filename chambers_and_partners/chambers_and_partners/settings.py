@@ -1,4 +1,6 @@
-# Scrapy settings for myanimelist project
+from shutil import which
+
+# Scrapy settings for chambers_and_partners project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +9,22 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "myanimelist"
+BOT_NAME = "chambers_and_partners"
 
-SPIDER_MODULES = ["myanimelist.spiders"]
-NEWSPIDER_MODULE = "myanimelist.spiders"
+SPIDER_MODULES = ["chambers_and_partners.spiders"]
+NEWSPIDER_MODULE = "chambers_and_partners.spiders"
+
+
+# scrapy selenium config
+
+
+SELENIUM_DRIVER_NAME = "chrome"
+SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
+SELENIUM_DRIVER_ARGUMENTS = ["--window-size=1280,720"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'myanimelist (+http://www.yourdomain.com)'
+# USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -36,12 +46,11 @@ ROBOTSTXT_OBEY = False
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
-# Override the default request headers:
+# # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9",
-    "Purpose": "prefetch",
     "Sec-Ch-Ua": '" Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"',
     "Sec-Ch-Ua-Mobile": "?0",
     "Sec-Ch-Ua-Platform": '"Linux"',
@@ -51,21 +60,18 @@ DEFAULT_REQUEST_HEADERS = {
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
-    "X-Amzn-Trace-Id": "Root=1-62632e2e-684dc984185300942a858ffa",
+    "X-Amzn-Trace-Id": "Root=1-625d9c32-37ca18974812b2d758c5af47",
 }
-# }
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistSpiderMiddleware': 543,
+#    'chambers_and_partners.middlewares.ChambersAndPartnersSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {"scrapy_selenium.SeleniumMiddleware": 800}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -76,7 +82,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'myanimelist.pipelines.MyanimelistPipeline': 300,
+#    'chambers_and_partners.pipelines.ChambersAndPartnersPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

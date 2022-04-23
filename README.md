@@ -34,5 +34,3 @@ pip install scrapy
 You are welcome to join by opening a pull request describing what it is for. Issues with any scraper can also be posted and will be reviewed at my earliest convenience.
 
 ## Thank You.
-
-

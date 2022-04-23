@@ -1,4 +1,6 @@
-# Scrapy settings for myanimelist project
+from shutil import which
+
+# Scrapy settings for booking project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +9,22 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "myanimelist"
+BOT_NAME = "booking"
 
-SPIDER_MODULES = ["myanimelist.spiders"]
-NEWSPIDER_MODULE = "myanimelist.spiders"
+SPIDER_MODULES = ["booking.spiders"]
+NEWSPIDER_MODULE = "booking.spiders"
+
+
+# scrapy selenium settings
+from shutil import which
+
+SELENIUM_DRIVER_NAME = "chrome"
+SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
+SELENIUM_DRIVER_ARGUMENTS = ["--window-size=900,600"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'myanimelist (+http://www.yourdomain.com)'
+# USER_AGENT = 'booking (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -41,7 +51,7 @@ DEFAULT_REQUEST_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9",
-    "Purpose": "prefetch",
+    "Host": "httpbin.org",
     "Sec-Ch-Ua": '" Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"',
     "Sec-Ch-Ua-Mobile": "?0",
     "Sec-Ch-Ua-Platform": '"Linux"',
@@ -51,21 +61,17 @@ DEFAULT_REQUEST_HEADERS = {
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
-    "X-Amzn-Trace-Id": "Root=1-62632e2e-684dc984185300942a858ffa",
+    "X-Amzn-Trace-Id": "Root=1-625d603f-6c9897c657f6549960017182",
 }
-# }
-
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistSpiderMiddleware': 543,
+#    'booking.middlewares.BookingSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {"scrapy_selenium.SeleniumMiddleware": 800}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -76,7 +82,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'myanimelist.pipelines.MyanimelistPipeline': 300,
+#    'booking.pipelines.BookingPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -99,3 +105,4 @@ AUTOTHROTTLE_ENABLED = True
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+FEED_EXPORT_ENCODING = "utf-8"

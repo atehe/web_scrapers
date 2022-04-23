@@ -1,4 +1,4 @@
-# Scrapy settings for myanimelist project
+# Scrapy settings for Amazon project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "myanimelist"
+BOT_NAME = "Amazon"
 
-SPIDER_MODULES = ["myanimelist.spiders"]
-NEWSPIDER_MODULE = "myanimelist.spiders"
+SPIDER_MODULES = ["Amazon.spiders"]
+NEWSPIDER_MODULE = "Amazon.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'myanimelist (+http://www.yourdomain.com)'
+# USER_AGENT = 'Amazon (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -51,20 +51,19 @@ DEFAULT_REQUEST_HEADERS = {
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
-    "X-Amzn-Trace-Id": "Root=1-62632e2e-684dc984185300942a858ffa",
+    "X-Amzn-Trace-Id": "Root=1-62629980-3fbb910526ea0e41148ca5bd",
 }
-# }
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistSpiderMiddleware': 543,
+#    'Amazon.middlewares.AmazonSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'myanimelist.middlewares.MyanimelistDownloaderMiddleware': 543,
+#    'Amazon.middlewares.AmazonDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -76,7 +75,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'myanimelist.pipelines.MyanimelistPipeline': 300,
+#    'Amazon.pipelines.AmazonPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
