@@ -5,9 +5,14 @@ Folders in this repo represent a webscraper that crawls a website to extract dat
 - [Jumia](http://jumia.com.ng/) - flashsales
 - [Worldometer](https://www.worldometers.info/) - countries population, countries covid data
 - [Myanimelist](https://myanimelist.net/topanime.php) - Animes
+- [Chambers and partners](https://chambers.com) - lawyers information
+- [Booking](https://bookings.com) - hotels
+- [Quotes](.)
 
 #### Work in Progress
 - [Asianwiki](https://asianwiki.com/) - TvN Dramas, SBS Dramas
+- [Tesla](https://www.tesla.com/inventory/used/ms?arrangeby=relevance&zip=95113) - tesla inventory
+
 
 ## Setup
 Generally, the projects are built mainly with Scrapy. Scrapy is best installed in a virtual environment to prevent conflicts with other packages, Conda, venv or pipenv can be used. Any extra description for setting up the environment for the scrapers will be provided in the projects README and a requirements.txt for installing dependencies.
