@@ -16,7 +16,6 @@ class JobsSpider(scrapy.Spider):
         yield scrapy.Request(url=url, callback=self.parse_job_listing)
 
     def parse_job_listing(self, response):
-        # open_in_browser(response)
         jobs_url = (
             response.xpath(
                 "//a[contains(@class,'resultWithShelf sponTapItem desktop')]/@href"
@@ -25,7 +24,13 @@ class JobsSpider(scrapy.Spider):
         )
         for url in jobs_url:
             abs_url = "https://ng.indeed.com" + url
-            yield scrapy.Request(url=abs_url, callback=self.parse_job_post)
+            yield response.follow(url=url, callback=self.parse_job_post)
+
+        next_page = response.xpath(
+            "//ul[@class='pagination-list']/li[position()=last()]/a/@href"
+        ).get()
+        if next_page:
+            yield response.follow(url=next_page, callback=self.parse_job_listing)
 
     def parse_job_post(self, response):
         loader = ItemLoader(item=IndeedItem(), selector=response)
@@ -47,21 +52,3 @@ class JobsSpider(scrapy.Spider):
         )
 
         yield loader.load_item()
-
-        # yield {
-        #     "title": response.xpath(
-        #         "//h1[contains(@class,'JobInfoHeader-title')]"
-        #     ).get(),
-        #     "company": response.xpath(
-        #         "//div[@class='icl-u-lg-mr--sm icl-u-xs-mr--xs']/a"
-        #     ).get(),
-        #     "location": response.xpath(
-        #         "//div[contains(@class,'jobsearch-InlineCompanyRating')]/following-sibling::div/div"
-        #     ).get(),
-        #     "salary": response.xpath(
-        #         "//div[@id='salaryInfoAndJobType']/span"
-        #     ).get(),
-        #     "description": response.xpath(
-        #         "//div[@id='jobDescriptionText']/"
-        #     ).getall(),
-        # }
