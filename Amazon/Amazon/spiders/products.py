@@ -31,36 +31,6 @@ class ProductsSpider(scrapy.Spider):
             )
 
     def parse_product(self, response):
-        # yield {
-        #     "Name": response.add_xpath("//span[@id='productTitle']/text()").get(),
-        #     "Rating": response.add_xpath(
-        #         "//div[@id='averageCustomerReviews']/span/span/span/a/i/span/text()[1]"
-        #     ).get(),
-        #     "Number of Reviews": response.add_xpath(
-        #         "//span[@id='acrCustomerReviewText']/text()[1]"
-        #     ).get(),
-        #     "Number of Answered Question": response.add_xpath(
-        #         "//a[@id='askATFLink']/span/text()[1]"
-        #     ).get(),
-        #     "Listing Price": response.add_xpath(
-        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
-        #     ).get(),
-        #     "Discounted Price": response.add_xpath(
-        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[2]"
-        #     ).get()
-        #     or response.add_xpath(
-        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
-        #     ).get(),
-        #     "ASIN": response.add_xpath(
-        #         "//th[contains(text(), 'ASIN')]/following-sibling::td/text()"
-        #     ).get(),
-        #     "Product Rank": response.add_xpath(
-        #         "//th[contains(text(), 'Rank')]/following-sibling::td/span/span/text()"
-        #     ).get(),
-        #     "Date first Available": response.add_xpath(
-        #         "//th[contains(text(), 'Date')]/following-sibling::td/text()"
-        #     ).get(),
-        # }
         loader = ItemLoader(item=AmazonItem(), selector=response)
 
         loader.add_xpath("Name", "//span[@id='productTitle']/text()")
