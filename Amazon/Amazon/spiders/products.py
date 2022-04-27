@@ -1,11 +1,13 @@
 import scrapy
 from urllib.parse import urlencode
+from itemloaders import ItemLoader
+from Amazon.items import AmazonItem
 
 
 class ProductsSpider(scrapy.Spider):
     name = "products"
     allowed_domains = ["amazon.com"]
-    search_queries = ["laptop", "camera"]
+    search_queries = ["laptop"]
 
     def start_requests(self):
         for query in self.search_queries:
@@ -29,33 +31,67 @@ class ProductsSpider(scrapy.Spider):
             )
 
     def parse_product(self, response):
-        yield {
-            "Name": response.xpath("//span[@id='productTitle']/text()").get(),
-            "Rating": response.xpath(
-                "//div[@id='averageCustomerReviews']/span/span/span/a/i/span/text()[1]"
-            ).get(),
-            "Number of Reviews": response.xpath(
-                "//span[@id='acrCustomerReviewText']/text()[1]"
-            ).get(),
-            "Number of Answered Question": response.xpath(
-                "//a[@id='askATFLink']/span/text()[1]"
-            ).get(),
-            "Listing Price": response.xpath(
-                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
-            ).get(),
-            "Current Price": response.xpath(
-                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[2]"
-            ).get()
-            or response.xpath(
-                "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
-            ).get(),
-            "ASIN": response.xpath(
-                "//th[contains(text(), 'ASIN')]/following-sibling::td/text()"
-            ).get(),
-            "Product Rank": response.xpath(
-                "//th[contains(text(), 'Rank')]/following-sibling::td/span/span/text()"
-            ).get(),
-            "Date first Available": response.xpath(
-                "//th[contains(text(), 'Date')]/following-sibling::td/text()"
-            ).get(),
-        }
+        # yield {
+        #     "Name": response.add_xpath("//span[@id='productTitle']/text()").get(),
+        #     "Rating": response.add_xpath(
+        #         "//div[@id='averageCustomerReviews']/span/span/span/a/i/span/text()[1]"
+        #     ).get(),
+        #     "Number of Reviews": response.add_xpath(
+        #         "//span[@id='acrCustomerReviewText']/text()[1]"
+        #     ).get(),
+        #     "Number of Answered Question": response.add_xpath(
+        #         "//a[@id='askATFLink']/span/text()[1]"
+        #     ).get(),
+        #     "Listing Price": response.add_xpath(
+        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
+        #     ).get(),
+        #     "Discounted Price": response.add_xpath(
+        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[2]"
+        #     ).get()
+        #     or response.add_xpath(
+        #         "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]"
+        #     ).get(),
+        #     "ASIN": response.add_xpath(
+        #         "//th[contains(text(), 'ASIN')]/following-sibling::td/text()"
+        #     ).get(),
+        #     "Product Rank": response.add_xpath(
+        #         "//th[contains(text(), 'Rank')]/following-sibling::td/span/span/text()"
+        #     ).get(),
+        #     "Date first Available": response.add_xpath(
+        #         "//th[contains(text(), 'Date')]/following-sibling::td/text()"
+        #     ).get(),
+        # }
+        loader = ItemLoader(item=AmazonItem(), selector=response)
+
+        loader.add_xpath("Name", "//span[@id='productTitle']/text()")
+        loader.add_xpath(
+            "Rating",
+            "//div[@id='averageCustomerReviews']/span/span/span/a/i/span/text()",
+        )
+        loader.add_xpath(
+            "Number_of_reviews", "//span[@id='acrCustomerReviewText']/text()[1]"
+        )
+        loader.add_xpath(
+            "Number_of_answered_questions", "//a[@id='askATFLink']/span/text()[1]"
+        )
+        loader.add_xpath(
+            "Listing_price",
+            "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[1]",
+        )
+        loader.add_xpath(
+            "Discounted_price",
+            "(//td[contains(text(),'Price')]/following-sibling::td/span/span[1]/text())[2]",
+        )
+        loader.add_xpath(
+            "ASIN", "//th[contains(text(), 'ASIN')]/following-sibling::td/text()"
+        )
+        loader.add_xpath(
+            "Product_Rank",
+            "//th[contains(text(), 'Rank')]/following-sibling::td/span//text()",
+        )
+        loader.add_xpath(
+            "Date_first_available",
+            "//th[contains(text(), 'Date')]/following-sibling::td/text()",
+        )
+
+        yield loader.load_item()
