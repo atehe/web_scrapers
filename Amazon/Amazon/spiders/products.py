@@ -1,13 +1,16 @@
+from gc import callbacks
 import scrapy
 from urllib.parse import urlencode
 from itemloaders import ItemLoader
 from Amazon.items import AmazonItem
+from scrapy.utils.response import open_in_browser
 
 
 class ProductsSpider(scrapy.Spider):
     name = "products"
     allowed_domains = ["amazon.com"]
     search_queries = ["laptop"]
+    page_num = 1
 
     def start_requests(self):
         for query in self.search_queries:
@@ -24,11 +27,15 @@ class ProductsSpider(scrapy.Spider):
             "//div[@class='a-section']/div/div[2]/div/div/div/h2/a/@href"
         ).getall()
         for url in products_url:
-            yield response.follow(
-                url=url,
-                callback=self.parse_product,
-                meta={"query": response.request.meta["query"]},
-            )
+            yield response.follow(url=url, callback=self.parse_product)
+
+        next_page = response.xpath(
+            "//a[contains(@class,'pagination') and contains(text(), 'Next')]/@href"
+        ).get()
+
+        if next_page:
+            self.page_num += 1
+            yield response.follow(url=next_page, callback=self.parse_search_results)
 
     def parse_product(self, response):
         loader = ItemLoader(item=AmazonItem(), selector=response)
