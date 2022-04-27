@@ -31,3 +31,7 @@ class IndeedItem(scrapy.Item):
     hiring_number = scrapy.Field(
         input_processor=MapCompose(remove_tags), output_processor=TakeFirst()
     )
+    time_posted = scrapy.Field(
+        input_processor=MapCompose(remove_tags), output_processor=TakeFirst()
+    )
+    job_url = scrapy.Field()
