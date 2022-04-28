@@ -8,8 +8,8 @@ from itemloaders.processors import MapCompose, TakeFirst, Join
 from w3lib.html import remove_tags
 
 
-def clean_text(text):
-    pass
+def clean_currency(currency):
+    return currency.replace("₦", "#")
 
 
 class IndeedItem(scrapy.Item):
@@ -23,7 +23,8 @@ class IndeedItem(scrapy.Item):
         input_processor=MapCompose(remove_tags), output_processor=TakeFirst()
     )
     expected_salary = scrapy.Field(
-        input_processor=MapCompose(remove_tags), output_processor=TakeFirst()
+        input_processor=MapCompose(remove_tags, clean_currency),
+        output_processor=TakeFirst(),
     )
     job_description = scrapy.Field(
         input_processor=MapCompose(remove_tags), output_processor=Join()
