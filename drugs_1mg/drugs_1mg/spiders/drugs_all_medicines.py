@@ -1,5 +1,6 @@
 import scrapy
 from scrapy.utils.response import open_in_browser
+from scrapy_selenium import SeleniumRequest
 
 
 class DrugsAllMedicinesSpider(scrapy.Spider):
@@ -7,13 +8,12 @@ class DrugsAllMedicinesSpider(scrapy.Spider):
     allowed_domains = ["www.1mg.com"]
 
     def start_requests(self):
-        index_letters = "abcdefghijklmnopqrstuvwstqrstuvwxyz"
+        index_letters = "abcdefghijklmnopqrstuvwxyz"
         for letter in index_letters:
             url = f"https://www.1mg.com/drugs-all-medicines?label={letter}"
-            yield scrapy.Request(url=url, callback=self.parse)
+            yield SeleniumRequest(url=url, callback=self.parse, wait_time=10)
 
     def parse(self, response):
-        open_in_browser(response)
 
         products = response.xpath("//div[contains(@class, '__product-grid__')]/div")
         for product in products:
