@@ -16,14 +16,14 @@ from shutil import which
 
 SELENIUM_DRIVER_NAME = "chrome"
 SELENIUM_DRIVER_EXECUTABLE_PATH = which("chrome")
-SELENIUM_DRIVER_ARGUMENTS = ["--head"]
+SELENIUM_DRIVER_ARGUMENTS = ["--headless"]
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'drugs_1mg (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32

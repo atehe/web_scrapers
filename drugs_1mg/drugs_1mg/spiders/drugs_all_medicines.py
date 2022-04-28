@@ -8,7 +8,7 @@ class DrugsAllMedicinesSpider(scrapy.Spider):
     allowed_domains = ["www.1mg.com"]
 
     def start_requests(self):
-        index_letters = "abcdefghijklmnopqrstuvwxyz"
+        index_letters = "l"
         for letter in index_letters:
             url = f"https://www.1mg.com/drugs-all-medicines?label={letter}"
             yield SeleniumRequest(url=url, callback=self.parse, wait_time=10)
@@ -29,3 +29,10 @@ class DrugsAllMedicinesSpider(scrapy.Spider):
                     ".//a/div[2]/div[4]/div[1]/text()"
                 ).get(),
             }
+
+        last_page = response.xpath(
+            "//ul[@class='list-pagination']/li[position()=(last()-1)]/a/text()"
+        ).get()
+        for page_num in range(2, int(last_page)):
+            url = response.url + f"&page={page_num}"
+            yield SeleniumRequest(url=url, callback=self.parse, wait_time=10)
